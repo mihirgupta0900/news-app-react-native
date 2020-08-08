@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import TopCard from "../components/TopCard";
@@ -6,10 +6,12 @@ import Card from "../components/Card";
 import { testData } from "../constants";
 import { renderArticle } from "../helpers/renderArticle";
 
-// import { NEWSAPI_KEY } from "react-native-dotenv";
+import getEnvVars from "../environment";
+
+const { newsApiKey } = getEnvVars();
 
 const Top = ({ navigation }) => {
-    testData.articles[0].first = true;
+    // testData.articles[0].first = true;
 
     const [articleData, setArticleData] = useState(undefined);
 
@@ -18,28 +20,36 @@ const Top = ({ navigation }) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer 93c4224f4a6243a2894e96109800be65`,
+                Authorization: `Bearer ${newsApiKey}`,
             },
         })
             .then((res) => res.json())
             .then((data) => {
                 // console.log("DATA ===> ", data);
+                data.articles[0].first = true;
                 return setArticleData(data);
             })
             .catch((err) => console.log(err));
     };
 
-    fetchArticles()
+    useEffect(() => {
+        fetchArticles();
+    }, []);
 
-    console.log(articleData);
+    // console.log(articleData);
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={testData.articles}
-                renderItem={renderArticle}
-                keyExtractor={(item) => Math.random().toString()}
-            />
+            {articleData ? (
+                <FlatList
+                    data={articleData.articles}
+                    renderItem={renderArticle}
+                    keyExtractor={(item) => Math.random().toString()}
+                />
+            ) : (
+                <Text style={{ color: "white" }}>Loading</Text>
+            )}
+
             <StatusBar
                 translucent
                 backgroundColor="#121212"
