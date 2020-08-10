@@ -24,6 +24,12 @@ import {
     Raleway_400Regular,
     Raleway_500Medium,
 } from "@expo-google-fonts/raleway";
+import Sports from "./screens/Sports";
+import Science from "./screens/Science";
+import Politics from "./screens/Politics";
+import Entertainment from "./screens/Entertainment";
+import Health from "./screens/Health";
+import Search from "./screens/Search";
 
 export default function App({ navigation }) {
     let [fontsloaded] = useFonts({
@@ -32,8 +38,6 @@ export default function App({ navigation }) {
         Raleway_400Regular,
         Raleway_500Medium,
     });
-
-    // console.log(moment("2019-08-06T16:00:40Z").fromNow());
 
     if (!fontsloaded) {
         return <AppLoading />;
@@ -58,7 +62,13 @@ export default function App({ navigation }) {
                     }}
                 >
                     <Drawer.Screen name="Home  " component={HomeTabNav} />
-                    <Drawer.Screen name="Bookmarks  " component={Bookmarks} />
+                    <Drawer.Screen name="Sports  " component={Sports} />
+                    <Drawer.Screen name="Science  " component={Science} />
+                    <Drawer.Screen name="Politics  " component={Politics} />
+                    <Drawer.Screen name="Entertainment  " component={Entertainment} />
+                    <Drawer.Screen name="Health  " component={Health} />
+                    <Drawer.Screen name="Search  " component={Search} />
+                    {/* <Drawer.Screen name="Bookmarks  " component={Bookmarks} /> */}
                 </Drawer.Navigator>
             </NavigationContainer>
         );

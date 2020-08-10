@@ -28,12 +28,16 @@ const Card = ({ title, imgSrc, publishedAt, url }) => {
                     </View>
                 </View>
                 <View style={styles.imgView}>
-                    <Image
-                        source={{
-                            uri: imgSrc,
-                        }}
-                        style={styles.imgStyle}
-                    />
+                    {imgSrc === "" ? (
+                        <Text>No Image Available</Text>
+                    ) : (
+                        <Image
+                            source={{
+                                uri: imgSrc,
+                            }}
+                            style={styles.imgStyle}
+                        />
+                    )}
                 </View>
             </View>
         </TouchableWithoutFeedback>

@@ -10,15 +10,21 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const TopCard = ({ imageUrl, title, publishedAt, url }) => {
     return (
-        <TouchableWithoutFeedback onPress={() => WebBrowser.openBrowserAsync(url)}>
+        <TouchableWithoutFeedback
+            onPress={() => WebBrowser.openBrowserAsync(url)}
+        >
             <View style={styles.main}>
                 <View style={styles.pic}>
-                    <Image
-                        source={{
-                            uri: imageUrl,
-                        }}
-                        style={styles.imgStyle}
-                    />
+                    {imageUrl === "" ? (
+                        <Text>No Image Available</Text>
+                    ) : (
+                        <Image
+                            source={{
+                                uri: imageUrl,
+                            }}
+                            style={styles.imgStyle}
+                        />
+                    )}
                 </View>
                 <View style={styles.textArea}>
                     <View style={{ paddingVertical: 5, paddingHorizontal: 25 }}>
