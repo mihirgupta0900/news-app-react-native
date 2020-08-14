@@ -8,16 +8,10 @@ import {
     RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import TopCard from "../components/TopCard";
-import Card from "../components/Card";
-import { testData } from "../constants";
 import { renderArticle } from "../helpers/renderArticle";
 import { wait } from "../helpers/refresh";
-import getEnvVars from "../environment";
 import { fetchArticlesByCountry } from "../helpers/fetchArticles";
 import Loading from "../components/Loading";
-
-const { newsApiKey } = getEnvVars();
 
 const Top = ({ navigation }) => {
     // State Hooks
@@ -26,9 +20,10 @@ const Top = ({ navigation }) => {
 
     // Function to fetch articles
     const fetchFn = () => {
-        fetchArticlesByCountry({ country: "in" }).then((data) => {
+        fetchArticlesByCountry("in").then((data) => {
             data.articles[0].first = true;
             setArticleData(data);
+            console.log(`NATIONAL DATA ====> ${data}`);
         });
     };
 

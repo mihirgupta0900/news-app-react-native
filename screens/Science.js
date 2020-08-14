@@ -25,19 +25,29 @@ const Science = ({ navigation }) => {
     // State Hooks
     const [articleData, setArticleData] = useState(undefined);
     const [refreshing, setRefreshing] = useState(false);
+    const [page, setPage] = useState(1);
 
     // Function to fetch articles
     const fetchFn = () => {
-        fetchArticlesByQuery({ query: "science" }).then((data) => {
-            data.articles[0].first = true;
-            setArticleData(data);
+        fetchArticlesByQuery({ query: "science", page: page }).then((data) => {
+            if (page === 1) {
+                data.articles[0].first = true;
+                setArticleData(data.articles);
+            } else {
+                setArticleData([...articleData, ...data.articles]);
+            }
         });
+    };
+
+    const fetchMoreFn = () => {
+        // console.log(`EXTRA FN RUN`);
+        setPage((curPage) => curPage + 1);
     };
 
     // Function to run after first render
     useEffect(() => {
         fetchFn();
-    }, []);
+    }, [page]);
 
     // Fn to run oulled to refresh
     const onRefresh = useCallback(() => {
@@ -53,7 +63,8 @@ const Science = ({ navigation }) => {
                 <Navbar screenName="Science" />
                 {articleData ? (
                     <FlatList
-                        data={articleData.articles}
+                        contentContainerStyle={{ paddingBottom: 100 }}
+                        data={articleData}
                         renderItem={renderArticle}
                         keyExtractor={(item) => Math.random().toString()}
                         refreshControl={
@@ -62,11 +73,12 @@ const Science = ({ navigation }) => {
                                 onRefresh={onRefresh}
                             />
                         }
+                        onEndReachedThreshold={0.1}
+                        onEndReached={fetchMoreFn}
                     />
                 ) : (
                     <Loading />
                 )}
-
                 <StatusBar
                     translucent
                     backgroundColor="#121212"

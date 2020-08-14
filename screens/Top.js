@@ -26,7 +26,8 @@ const Top = ({ navigation }) => {
 
     // Function to fetch articles
     const fetchFn = () => {
-        fetchArticlesByCountry({ country: "us" }).then((data) => {
+        fetchArticlesByCountry("us").then((data) => {
+            // console.log(`DATA ====>`, data);
             if (data.length === 0) {
                 setArticleData(data)
             } else {
@@ -34,7 +35,7 @@ const Top = ({ navigation }) => {
                 setArticleData(data);
             }
         }).catch(err => {
-            console.log('API ERR')
+            console.log('API ERR=====> ',err);
         })
     };
 

@@ -30,6 +30,15 @@ import Politics from "./screens/Politics";
 import Entertainment from "./screens/Entertainment";
 import Health from "./screens/Health";
 import Search from "./screens/Search";
+import {
+    SportsStack,
+    HomeStack,
+    ScienceStack,
+    PoliticsStack,
+    HealthStack,
+    EntertainmentStack,
+} from "./navigators/StacksNavs";
+console.log(moment().subtract(7, 'd').toISOString());
 
 export default function App({ navigation }) {
     let [fontsloaded] = useFonts({
@@ -61,14 +70,18 @@ export default function App({ navigation }) {
                         },
                     }}
                 >
-                    <Drawer.Screen name="Home  " component={HomeTabNav} />
-                    <Drawer.Screen name="Sports  " component={Sports} />
-                    <Drawer.Screen name="Science  " component={Science} />
-                    <Drawer.Screen name="Politics  " component={Politics} />
-                    <Drawer.Screen name="Entertainment  " component={Entertainment} />
-                    <Drawer.Screen name="Health  " component={Health} />
-                    <Drawer.Screen name="Search  " component={Search} />
-                    {/* <Drawer.Screen name="Bookmarks  " component={Bookmarks} /> */}
+                    <Drawer.Screen name="Home  " component={HomeStack} />
+                    <Drawer.Screen name="Sports  " component={SportsStack} />
+                    <Drawer.Screen name="Science  " component={ScienceStack} />
+                    <Drawer.Screen
+                        name="Politics  "
+                        component={PoliticsStack}
+                    />
+                    <Drawer.Screen
+                        name="Entertainment  "
+                        component={EntertainmentStack}
+                    />
+                    <Drawer.Screen name="Health  " component={HealthStack} />
                 </Drawer.Navigator>
             </NavigationContainer>
         );
