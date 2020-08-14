@@ -2,7 +2,7 @@ import React from "react";
 import TopCard from "../components/TopCard";
 import Card from "../components/Card";
 
-export const renderArticle = ({ item, index }) => {
+export const renderArticle = ({ item }) => {
     if (item.first) {
         return (
             <TopCard

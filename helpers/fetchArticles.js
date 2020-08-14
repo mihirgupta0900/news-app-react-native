@@ -2,14 +2,18 @@ import getEnvVars from "../environment";
 const { serverUrl } = getEnvVars();
 
 export const fetchArticlesByCountry = ({ country }) => {
-    // http://192.168.1.14:8000/api/getResByCountry?country=us
     return fetch(`http://${serverUrl}/getResByCountry?country=${country}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
     })
-        .then((res) => res.json())
+        .then((res) => {
+            console.log(res.ok);
+            if(!res.ok){
+                throw Error(res.statusText)
+            }
+            return res.json()})
         .catch((err) => {
             return console.log(`FETCH ERR ====> ${JSON.stringify(err)}`);
         });

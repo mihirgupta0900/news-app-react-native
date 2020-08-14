@@ -11,8 +11,6 @@ import moment from "moment";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import Bookmarks from "./screens/Bookmarks";
-import HomeTabNav from "./navigators/HomeTabNav";
 import CustomDrawer from "./components/CustomDrawer";
 
 import {
@@ -24,12 +22,6 @@ import {
     Raleway_400Regular,
     Raleway_500Medium,
 } from "@expo-google-fonts/raleway";
-import Sports from "./screens/Sports";
-import Science from "./screens/Science";
-import Politics from "./screens/Politics";
-import Entertainment from "./screens/Entertainment";
-import Health from "./screens/Health";
-import Search from "./screens/Search";
 import {
     SportsStack,
     HomeStack,
@@ -38,9 +30,8 @@ import {
     HealthStack,
     EntertainmentStack,
 } from "./navigators/StacksNavs";
-console.log(moment().subtract(7, 'd').toISOString());
 
-export default function App({ navigation }) {
+const App = ({ navigation }) => {
     let [fontsloaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular,
@@ -86,7 +77,9 @@ export default function App({ navigation }) {
             </NavigationContainer>
         );
     }
-}
+};
+
+export default App;
 
 const Drawer = createDrawerNavigator();
 

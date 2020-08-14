@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    Button,
-    FlatList,
-    RefreshControl,
-} from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import TopCard from "../components/TopCard";
-import Card from "../components/Card";
-import { testData } from "../constants";
 import { renderArticle } from "../helpers/renderArticle";
 import { wait } from "../helpers/refresh";
 import getEnvVars from "../environment";
@@ -31,25 +21,32 @@ const Science = ({ navigation }) => {
     // Function to fetch articles
     const fetchFn = () => {
         fetchArticlesByQuery({ query: "science", page: page }).then((data) => {
-            if (page === 1) {
-                data.articles[0].first = true;
-                setArticleData(data.articles);
+            // console.log(data);
+            if (data.status === 'error') {
+                console.log(`data not there`);
             } else {
-                setArticleData([...articleData, ...data.articles]);
+                if (page === 1) {
+                    console.log(data.articles.length);
+                    data.articles[0].first = true;
+                    setArticleData(data.articles);
+                } else {
+                    console.log(data.articles.length);
+                    setArticleData([...articleData, ...data.articles]);
+                }
             }
         });
     };
 
     // Fn to load more data
-    // const fetchMoreFn = () => {
-    //     setPage((curPage) => curPage + 1);
-    // };
-    const fetchMoreFn = useCallback(() => {
-        setMoreLoading(true);
-        setPage(page => page + 1)
+    const fetchMoreFn = () => {
+        setPage((curPage) => curPage + 1);
+    };
+    // const fetchMoreFn = useCallback(() => {
+    //     setMoreLoading(true);
+    //     setPage(page => page + 1)
 
-        wait(1000).then(() => setMoreLoading(false));
-    }, []);
+    //     wait(1000).then(() => setMoreLoading(false));
+    // }, []);
 
     // Function to run after first render and when `page` changes
     useEffect(() => {
@@ -70,7 +67,7 @@ const Science = ({ navigation }) => {
                 <Navbar screenName="Science" />
                 {articleData ? (
                     <FlatList
-                        contentContainerStyle={{ paddingBottom: 100 }}
+                        contentContainerStyle={{ paddingBottom: 200 }}
                         data={articleData}
                         renderItem={renderArticle}
                         keyExtractor={(item) => Math.random().toString()}
@@ -86,7 +83,7 @@ const Science = ({ navigation }) => {
                 ) : (
                     <Loading />
                 )}
-                {moreLoading ? <Loading /> : <View></View>}
+                {/* {moreLoading ? <Text>Loading</Text> : <View></View>} */}
                 <StatusBar
                     translucent
                     backgroundColor="#121212"
