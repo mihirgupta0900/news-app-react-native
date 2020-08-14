@@ -1,7 +1,14 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    SafeAreaView,
+    useWindowDimensions,
+} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +20,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import CustomDrawer from "./components/CustomDrawer";
 
+// Import fonts
 import {
     useFonts,
     Montserrat_500Medium,
@@ -32,6 +40,7 @@ import {
 } from "./navigators/StacksNavs";
 
 const App = ({ navigation }) => {
+    // Load fonts
     let [fontsloaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular,
@@ -39,15 +48,21 @@ const App = ({ navigation }) => {
         Raleway_500Medium,
     });
 
+    const windowWidth = useWindowDimensions().width;
+
     if (!fontsloaded) {
         return <AppLoading />;
     } else {
         return (
             <NavigationContainer>
                 <Drawer.Navigator
-                    drawerStyle={styles.drawerStyle}
+                    drawerStyle={[
+                        { width: windowWidth * 0.75 },
+                        styles.drawerStyle,
+                    ]}
                     initialRouteName="Home"
                     drawerContent={(props) => <CustomDrawer {...props} />}
+                    edgeWidth={windowWidth * 0.3}
                     drawerContentOptions={{
                         activeTintColor: "#86DAFC",
                         inactiveTintColor: "#C1E1EE",

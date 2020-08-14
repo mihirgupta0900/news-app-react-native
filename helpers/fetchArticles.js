@@ -9,7 +9,6 @@ export const fetchArticlesByCountry = ({ country }) => {
         },
     })
         .then((res) => {
-            console.log(res.ok);
             if(!res.ok){
                 throw Error(res.statusText)
             }
