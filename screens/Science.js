@@ -26,6 +26,7 @@ const Science = ({ navigation }) => {
     const [articleData, setArticleData] = useState(undefined);
     const [refreshing, setRefreshing] = useState(false);
     const [page, setPage] = useState(1);
+    const [moreLoading, setMoreLoading] = useState(false);
 
     // Function to fetch articles
     const fetchFn = () => {
@@ -39,12 +40,18 @@ const Science = ({ navigation }) => {
         });
     };
 
-    const fetchMoreFn = () => {
-        // console.log(`EXTRA FN RUN`);
-        setPage((curPage) => curPage + 1);
-    };
+    // Fn to load more data
+    // const fetchMoreFn = () => {
+    //     setPage((curPage) => curPage + 1);
+    // };
+    const fetchMoreFn = useCallback(() => {
+        setMoreLoading(true);
+        setPage(page => page + 1)
 
-    // Function to run after first render
+        wait(1000).then(() => setMoreLoading(false));
+    }, []);
+
+    // Function to run after first render and when `page` changes
     useEffect(() => {
         fetchFn();
     }, [page]);
@@ -79,6 +86,7 @@ const Science = ({ navigation }) => {
                 ) : (
                     <Loading />
                 )}
+                {moreLoading ? <Loading /> : <View></View>}
                 <StatusBar
                     translucent
                     backgroundColor="#121212"

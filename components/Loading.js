@@ -6,8 +6,6 @@ const Loading = () => {
         <View style={styles.loading}>
             <Image
                 source={require("../assets/infinity-loading-121212.gif")}
-                // height={50}
-                // width={50}
                 style={{
                     height: 300,
                     width: 300,

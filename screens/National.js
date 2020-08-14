@@ -20,10 +20,10 @@ const Top = ({ navigation }) => {
 
     // Function to fetch articles
     const fetchFn = () => {
-        fetchArticlesByCountry("in").then((data) => {
+        fetchArticlesByCountry({ country: "in" }).then((data) => {
             data.articles[0].first = true;
             setArticleData(data);
-            console.log(`NATIONAL DATA ====> ${data}`);
+            // console.log(`NATIONAL DATA ====> ${data}`);
         });
     };
 
