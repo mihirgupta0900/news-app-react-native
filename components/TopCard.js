@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
@@ -8,48 +8,99 @@ import { borderRadius } from "../constants";
 import moment from "moment";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-const TopCard = ({ imageUrl, title, publishedAt, url }) => {
-    return (
-        <TouchableWithoutFeedback
-            onPress={() => WebBrowser.openBrowserAsync(url)}
-        >
-            <View style={styles.main}>
-                <View style={styles.pic}>
-                    {imageUrl === "" ? (
-                        <Text>No Image Available</Text>
-                    ) : (
-                        <Image
-                            source={{
-                                uri: imageUrl,
+class TopCard extends PureComponent {
+    render() {
+        const { imageUrl, title, publishedAt, url } = this.props;
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => WebBrowser.openBrowserAsync(url)}
+            >
+                <View style={styles.main}>
+                    <View style={styles.pic}>
+                        {imageUrl === "" ? (
+                            <Text>No Image Available</Text>
+                        ) : (
+                            <Image
+                                source={{
+                                    uri: imageUrl,
+                                }}
+                                style={styles.imgStyle}
+                            />
+                        )}
+                    </View>
+                    <View style={styles.textArea}>
+                        <View
+                            style={{
+                                paddingVertical: 5,
+                                paddingHorizontal: 25,
                             }}
-                            style={styles.imgStyle}
-                        />
-                    )}
-                </View>
-                <View style={styles.textArea}>
-                    <View style={{ paddingVertical: 5, paddingHorizontal: 25 }}>
-                        <View style={styles.cardTitleView}>
-                            <Text style={styles.cardTitle}>{title}</Text>
-                            {/* <View style={styles.bookmarkView}> */}
-                            {/* <MaterialCommunityIcons
+                        >
+                            <View style={styles.cardTitleView}>
+                                <Text style={styles.cardTitle}>{title}</Text>
+                                {/* <View style={styles.bookmarkView}> */}
+                                {/* <MaterialCommunityIcons
                             name="bookmark-outline"
                             style={styles.bookmarkStyle}
                             size={34}
                             color="white"
                         /> */}
-                            {/* </View> */}
-                        </View>
-                        <View style={styles.textBottomView}>
-                            <Text style={styles.publishedDate}>
-                                {moment(publishedAt).fromNow()}
-                            </Text>
+                                {/* </View> */}
+                            </View>
+                            <View style={styles.textBottomView}>
+                                <Text style={styles.publishedDate}>
+                                    {moment(publishedAt).fromNow()}
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
-        </TouchableWithoutFeedback>
-    );
-};
+            </TouchableWithoutFeedback>
+        );
+    }
+}
+
+// const TopCard = ({ imageUrl, title, publishedAt, url }) => {
+//     return (
+//         <TouchableWithoutFeedback
+//             onPress={() => WebBrowser.openBrowserAsync(url)}
+//         >
+//             <View style={styles.main}>
+//                 <View style={styles.pic}>
+//                     {imageUrl === "" ? (
+//                         <Text>No Image Available</Text>
+//                     ) : (
+//                         <Image
+//                             source={{
+//                                 uri: imageUrl,
+//                             }}
+//                             style={styles.imgStyle}
+//                         />
+//                     )}
+//                 </View>
+//                 <View style={styles.textArea}>
+//                     <View style={{ paddingVertical: 5, paddingHorizontal: 25 }}>
+//                         <View style={styles.cardTitleView}>
+//                             <Text style={styles.cardTitle}>{title}</Text>
+//                             {/* <View style={styles.bookmarkView}> */}
+//                             {/* <MaterialCommunityIcons
+//                             name="bookmark-outline"
+//                             style={styles.bookmarkStyle}
+//                             size={34}
+//                             color="white"
+//                         /> */}
+//                             {/* </View> */}
+//                         </View>
+//                         <View style={styles.textBottomView}>
+//                             <Text style={styles.publishedDate}>
+//                                 {moment(publishedAt).fromNow()}
+//                             </Text>
+//                         </View>
+//                     </View>
+//                 </View>
+//             </View>
+//         </TouchableWithoutFeedback>
+//     );
+// };
 
 export default TopCard;
 

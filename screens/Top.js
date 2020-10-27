@@ -26,16 +26,19 @@ const Top = ({ navigation }) => {
 
     // Function to fetch articles
     const fetchFn = () => {
-        fetchArticlesByCountry({ country: "us" }).then((data) => {
-            if (data.length === 0) {
-                setArticleData(data)
-            } else {
-                data.articles[0].first = true;
-                setArticleData(data);
-            }
-        }).catch(err => {
-            console.log('API ERR')
-        })
+        fetchArticlesByCountry({ country: "us" })
+            .then((data) => {
+                // console.log(`DATA ====>`, data);
+                if (data.length === 0) {
+                    setArticleData(data);
+                } else {
+                    data.articles[0].first = true;
+                    setArticleData(data);
+                }
+            })
+            .catch((err) => {
+                console.log("API ERR=====> ", err);
+            });
     };
 
     // Function to run after first render

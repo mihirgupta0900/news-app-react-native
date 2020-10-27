@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { borderRadius } from "../constants";
@@ -7,42 +7,82 @@ import * as WebBrowser from "expo-web-browser";
 import moment from "moment";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-const Card = ({ title, imgSrc, publishedAt, url }) => {
-    return (
-        <TouchableWithoutFeedback
-            onPress={() => WebBrowser.openBrowserAsync(url)}
-        >
-            <View style={styles.container}>
-                <View style={styles.textArea}>
-                    <Text style={styles.cardTitle}>{title}</Text>
-                    <View style={styles.bottomText}>
-                        <Text style={styles.publishedDate}>
-                            {moment(publishedAt).fromNow()}
-                        </Text>
-                        {/* <MaterialCommunityIcons
+class Card extends PureComponent {
+    render() {
+        const { title, imgSrc, publishedAt, url } = this.props;
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => WebBrowser.openBrowserAsync(url)}
+            >
+                <View style={styles.container}>
+                    <View style={styles.textArea}>
+                        <Text style={styles.cardTitle}>{title}</Text>
+                        <View style={styles.bottomText}>
+                            <Text style={styles.publishedDate}>
+                                {moment(publishedAt).fromNow()}
+                            </Text>
+                            {/* <MaterialCommunityIcons
                         name="bookmark-outline"
                         style={styles.bookmarkStyle}
                         size={34}
                         color="white"
                     /> */}
+                        </View>
+                    </View>
+                    <View style={styles.imgView}>
+                        {imgSrc === "" ? (
+                            <Text>No Image Available</Text>
+                        ) : (
+                            <Image
+                                source={{
+                                    uri: imgSrc,
+                                }}
+                                style={styles.imgStyle}
+                            />
+                        )}
                     </View>
                 </View>
-                <View style={styles.imgView}>
-                    {imgSrc === "" ? (
-                        <Text>No Image Available</Text>
-                    ) : (
-                        <Image
-                            source={{
-                                uri: imgSrc,
-                            }}
-                            style={styles.imgStyle}
-                        />
-                    )}
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
-    );
-};
+            </TouchableWithoutFeedback>
+        );
+    }
+}
+
+// const Card = ({ title, imgSrc, publishedAt, url }) => {
+//     return (
+//         <TouchableWithoutFeedback
+//             onPress={() => WebBrowser.openBrowserAsync(url)}
+//         >
+//             <View style={styles.container}>
+//                 <View style={styles.textArea}>
+//                     <Text style={styles.cardTitle}>{title}</Text>
+//                     <View style={styles.bottomText}>
+//                         <Text style={styles.publishedDate}>
+//                             {moment(publishedAt).fromNow()}
+//                         </Text>
+//                         {/* <MaterialCommunityIcons
+//                         name="bookmark-outline"
+//                         style={styles.bookmarkStyle}
+//                         size={34}
+//                         color="white"
+//                     /> */}
+//                     </View>
+//                 </View>
+//                 <View style={styles.imgView}>
+//                     {imgSrc === "" ? (
+//                         <Text>No Image Available</Text>
+//                     ) : (
+//                         <Image
+//                             source={{
+//                                 uri: imgSrc,
+//                             }}
+//                             style={styles.imgStyle}
+//                         />
+//                     )}
+//                 </View>
+//             </View>
+//         </TouchableWithoutFeedback>
+//     );
+// };
 
 export default Card;
 
