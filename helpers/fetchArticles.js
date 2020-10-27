@@ -1,5 +1,9 @@
 import getEnvVars from "../environment";
-const { newsApiKey } = getEnvVars();
+import moment from "moment";
+const { serverUrl } = getEnvVars();
+
+var todaysDateISO = moment().toISOString();
+var weekBackDateISO = moment().subtract(7, "d").toISOString();
 
 export const fetchArticlesByCountry = ({ country }) => {
     return fetch(`https://newsapi.org/v2/top-headlines?country=${country}`, {
@@ -16,12 +20,11 @@ export const fetchArticlesByCountry = ({ country }) => {
         });
 };
 
-export const fetchArticlesByQuery = ({ query }) => {
-    return fetch(`https://newsapi.org/v2/top-headlines?q=${query}`, {
+export const fetchArticlesByQuery = ({ query, page }) => {
+    return fetch(`${serverUrl}/getResByQuery?q=${query}&page=${page}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${newsApiKey}`,
         },
     })
         .then((res) => res.json())
